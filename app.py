@@ -30,8 +30,6 @@ def semestre(x):
 def pagamento(valor):
     return 'Você pagou: '+ str(valor)
 
-@app.route('/soma', defaults={"n1": "0", "n2": "0"})
-
 @app.route('/arearestrita/<int:id>')
 def arearestrita(id):
     if id == 1:
@@ -39,25 +37,39 @@ def arearestrita(id):
     else:
         return "[cadeado aberto] Acesso liberado"
     
-@app.route('/operacao/<float:n1>/<float:n2>')
-def somar(n1, n2):
+@app.route('/operacao/<tipo>/<float:n1>/<float:n2>')
+def operacao(tipo, n1, n2):
+    if tipo == 'Soma':
+        resultado = n1 + n2
+    elif tipo == 'Subtração':
+        resultado = n1 - n2
+    elif tipo == 'Divisão':
+        resultado = n1 / n2
+    else:
+        resultado = n1 * n2
+
+    return str(resultado)
+    
+#Questão 1
+
+@app.route('/saudacao/<nome>')
+def saudacao(nome):
+    return f'Greetings, {nome}'
+
+#Questão 2
+@app.route('/calculo/<n1>/<n2>')
+def soma(n1, n2):
     resultado = n1 + n2
-    return render_template('somar.html', n1=n1, n2=n2, resultado=resultado)
+    return resultado
 
-@app.route('/operacao/<float:n1>/<float:n2>')
-def sub(n1, n2):
-    resultado = n1 - n2
-    return render_template('sub.html', n1=n1, n2=n2, resultado=resultado)
-
-@app.route('/operacao/<float:n1>/<float:n2>')
-def div(n1, n2):
-    resultado = n1 % n2
-    return render_template('div.html', n1=n1, n2=n2, resultado=resultado)
-
-@app.route('/operacao/<float:n1>/<float:n2>')
-def sub(n1, n2):
-    resultado = n1 * n2
-    return render_template('multi.html', n1=n1, n2=n2, resultado=resultado)
+#Questão 3
+@app.route('/idade/<nome>/<int:idade>')
+def verificar_idade(nome, idade):
+    if idade <= 18:
+        return f"Olá {nome} Você é de menor"
+    else:
+        return "Você é de maior"
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
