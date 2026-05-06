@@ -31,10 +31,6 @@ def pagamento(valor):
     return 'Você pagou: '+ str(valor)
 
 @app.route('/soma', defaults={"n1": "0", "n2": "0"})
-@app.route('/soma/<int:n1>/<int:n2>')
-def soma(n1, n2):
-    resultado = n1 + n2
-    return render_template('somar.html', n1=n1, n2=n2, resultado=resultado)
 
 @app.route('/arearestrita/<int:id>')
 def arearestrita(id):
@@ -42,6 +38,26 @@ def arearestrita(id):
         return "[cadeado fechado] Acesso bloqueado"
     else:
         return "[cadeado aberto] Acesso liberado"
+    
+@app.route('/operacao/<float:n1>/<float:n2>')
+def somar(n1, n2):
+    resultado = n1 + n2
+    return render_template('somar.html', n1=n1, n2=n2, resultado=resultado)
+
+@app.route('/operacao/<float:n1>/<float:n2>')
+def sub(n1, n2):
+    resultado = n1 - n2
+    return render_template('sub.html', n1=n1, n2=n2, resultado=resultado)
+
+@app.route('/operacao/<float:n1>/<float:n2>')
+def div(n1, n2):
+    resultado = n1 % n2
+    return render_template('div.html', n1=n1, n2=n2, resultado=resultado)
+
+@app.route('/operacao/<float:n1>/<float:n2>')
+def sub(n1, n2):
+    resultado = n1 * n2
+    return render_template('multi.html', n1=n1, n2=n2, resultado=resultado)
 
 if __name__ == "__main__":
     app.run(debug=True)
