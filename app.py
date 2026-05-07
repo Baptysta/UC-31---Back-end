@@ -69,6 +69,20 @@ def verificar_idade(nome, idade):
         return f"Olá {nome} Você é de menor"
     else:
         return "Você é de maior"
+
+@app.route('/pizzaria/<sabor>')
+def pizza(sabor):
+    if sabor == 'calabresa':
+        return render_template('calabresa.html', title='Calabresa Acebolada')
+    
+    elif sabor == 'marguerita':
+        return render_template('marguerita.html', title='Marguerita Especial')
+    
+    elif sabor == 'frango':
+        return render_template('frango.html', title='Frango com Catupiry')
+    
+    else:
+        return "<h1>Sabor não encontrado!</h1><p>Consulte nosso cardápio.</p>", 404
     
 
 if __name__ == "__main__":
